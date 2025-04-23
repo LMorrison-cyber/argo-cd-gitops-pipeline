@@ -27,9 +27,6 @@ Ideal for DevOps engineers seeking to showcase real-world GitOps experience.
 
 argo-cd-gitops-pipeline/ ├── terraform/ # Terraform for EKS provisioning │ ├── main.tf │ ├── variables.tf │ └── outputs.tf ├── helm/ # Helm chart for the NGINX app │ └── nginx/ │ ├── Chart.yaml │ ├── values.yaml │ └── templates/ │ ├── deployment.yaml │ └── service.yaml ├── argocd/ # Argo CD app definition │ └── app.yaml ├── .github/workflows/ # GitHub Actions for CI/CD │ └── deploy.yml ├── assets/ # Architecture diagram │ └── argo-cd-architecture.png ├── setup.sh # Argo CD install + app deploy script ├── init-project.sh # Bootstrap script to generate structure ├── .gitignore ├── LICENSE └── README.md
 
-yaml
-Copy
-Edit
 
 ---
 
@@ -47,21 +44,20 @@ Edit
 
 ### 1. Bootstrap the Project
 
-```bash
+
 ./init-project.sh
+
 2. Provision EKS with Terraform
-bash
-Copy
-Edit
+
 cd terraform
 terraform init
 terraform apply
+
 3. Install Argo CD and Deploy Helm App
-bash
-Copy
-Edit
+
 cd ..
 ./setup.sh
+
 ✅ GitHub Actions CI/CD
 This repo includes a GitHub Actions workflow that syncs your Argo CD app on every push to main.
 
@@ -71,6 +67,7 @@ Secret Name Description
 ARGOCD_SERVER   Argo CD URL/IP (e.g. 35.123.45.6)
 ARGOCD_USERNAME Typically admin
 ARGOCD_PASSWORD Initial admin password (see below)
+
 🧰 Tools Used
 Terraform for EKS infrastructure
 
@@ -92,16 +89,12 @@ Terraform → EKS → Argo CD → Helm App → GitHub Actions (auto-sync)
 🔐 Argo CD Access
 To get the admin password for Argo CD, run:
 
-bash
-Copy
-Edit
+
 kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d && echo
+
 To port-forward the Argo CD UI:
 
-bash
-Copy
-Edit
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 Access the UI at: https://localhost:8080
 
